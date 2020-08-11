@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block style %} <link rel="stylesheet" href="{% static 'style.css' %}"> {% endblock style %}
+{% block jumbotron %}
+{% include "scraper/jumbotron.html" %}
+{% endblock jumbotron %}
+{% block content %}
+<div class="row">
+    {% include "scraper/productList.html" %}
+</div>
+
+{% endblock content %}

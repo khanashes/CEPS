@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block style %}
+<style>
+.logo {
+    font-family: 'Peralta', cursive;
+  }
+  
+  .logo a {
+    color: rgba(0,0,0,.9);
+  }
+  
+  .logo a:hover,
+  .logo a:active {
+    text-decoration: none;
+  }
+</style>
+
+{% endblock %}
+
+{% block body %}
+<div class="container">
+    <h1 class="text-center logo my-4">
+        <a href="{% url 'home' %}">CEPS</a>
+    </h1>
+    {% block content %}
+    {% endblock %}
+</div>
+{% endblock %}
