@@ -51,6 +51,12 @@ def scraper(request):
         if find:
             if find[0].price != product.price:
                 Product.objects.filter(title=product.title).update(price=product.price)
+                x = find[0]
+                w = WishList.objects.filter(product=x)
+                if w:
+                    for wishlist in w:
+                        notify = Notification(user = wishlist.user, changeMessage="Price is updated from this {} to this {}".format(x.price, product.price))
+                        notify.save()
 
         
 
