@@ -16,7 +16,10 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.contrib.auth import views as auth_views
+import notifications.urls
 urlpatterns = [
+    path("inbox/notification/", include(notifications.urls, namespace='notifications')),
+    path("notificationView/", include('notify.urls')),
     path('', include('scraper.urls')),
     path('admin/', admin.site.urls),
     path('accounts/', include('accounts.urls')),

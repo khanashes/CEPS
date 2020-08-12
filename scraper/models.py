@@ -25,12 +25,12 @@ class WishList(models.Model):
     class Meta:
         ordering = ("-added_date",)
 
-class Notification(models.Model):
+"""class Notification(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     date = models.DateTimeField(auto_now_add=True)
     changeMessage = models.TextField(null=True)
     class Meta:
         ordering = ('date',)
     def __str__(self):
-        return self.changeMessage
+        return self.changeMessage"""
     

@@ -1,15 +1,17 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import ListView
-from .models import Product, WishList, Notification
-# Create your views here.
+from .models import Product, WishList #Notification
 from bs4 import BeautifulSoup
 from requests import get
 import lxml
+from django.db.models import Q
+# Create your views here.
+
 class HomeView(ListView):
     model = Product
     template_name = "scraper/home.html"
     context_object_name = "products"
-
+    paginate_by = 20
 
 def mega():
     pageNumber = 1
@@ -41,6 +43,7 @@ def mega():
                 proList.append(pro)    
         pageNumber = pageNumber + 1
     return proList
+
 def scraper(request):
     products = mega()
     for product in products:
@@ -57,11 +60,8 @@ def scraper(request):
                     for wishlist in w:
                         notify = Notification(user = wishlist.user, changeMessage="Price is updated from this {} to this {}".format(x.price, product.price))
                         notify.save()
+    return redirect('home')
 
-        
-
-
-    return redirect("home")
 
 def addToWishList(request,pk):
     product = get_object_or_404(Product,pk=pk)
@@ -77,3 +77,30 @@ def addToWishList(request,pk):
 def wishListView(request):
     products = request.user.wishlist_set.all()
     return render(request, 'scraper/wishlist.html', context={'products':products})
+
+
+"""class SearchView(ListView):
+    model = Product
+    template_name = 'scraper/search.html'
+    context_object_name = "products"
+    def get_queryset(self):
+        query = self.request.GET.get('query')
+        products = Product.objects.filter(Q(title__icontains=query) | Q(productUrl__icontains=query)).order_by("-price")
+        return products"""
+        
+def SearchView(request):
+    if request.method == "GET":
+        query = request.GET.get('query')
+        products = Product.objects.filter(Q(title__icontains=query) | Q(productUrl__icontains=query)).order_by("-price")
+        return render(request, "scraper/search.html",context={"products":products, "query":query})
+
+def filterView(request,query):
+    if request.method == 'GET':
+        mini = request.GET.get('Min')
+        maxi = request.GET.get('Max')
+        productList = Product.objects.filter(Q(title__icontains=query) | Q(productUrl__icontains=query))
+        products = []
+        for prod in productList:
+            if prod.price >= int(mini) and prod.price <= int(maxi):
+                products.append(prod)
+        return render(request, "scraper/search.html",context={"products":products, "query":query})

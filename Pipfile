@@ -7,13 +7,15 @@ verify_ssl = true
 pylint = "*"
 
 [packages]
-django = "===3.0"
+django = "==3.0"
 bs4 = "*"
 requests = "*"
 lxml = "*"
 django-simple-history = "*"
 psycopg2 = "*"
 django-widget-tweaks = "*"
+channels = "*"
+celery = "*"
 
 [requires]
 python_version = "3.7"

@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
-
+from celery.schedules import crontab
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -41,6 +41,8 @@ INSTALLED_APPS = [
     'widget_tweaks',
     'accounts.templatetags.form_tags',
     'scraper.apps.ScraperConfig',
+    'notifications',
+    'notify.apps.NotifyConfig',
 ]
 
 MIDDLEWARE = [
@@ -72,8 +74,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'main.wsgi.application'
-
-
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
@@ -133,3 +133,13 @@ LOGOUT_REDIRECT_URL = 'home'
 LOGIN_REDIRECT_URL = 'home'
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 LOGIN_URL = 'login'
+CELERY_BROKER_URL = 'redis://localhost:6379'
+CELERY_BEAT_SCHEDULE = {
+    'scrape_data_schedule': { 
+         'task': 'scraper.tasks.scrape_data', 
+         'schedule': 120,
+         'args': ('We don’t need any',),
+        },          
+}
+
+FORKED_BY_MULTIPROCESSING=1
