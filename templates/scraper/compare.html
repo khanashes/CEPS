@@ -1,0 +1,97 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block style %} <link rel="stylesheet" href="{% static 'product.css' %}"> {% endblock style %}
+{% block content %}
+<section class="profil  py-5 ">
+   <div class="container">
+     <div class="row">
+         <div class="col-md-4">
+              <div class="slider">
+                  <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                      <ol class="carousel-indicators">
+                          <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                          <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                          <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+                      </ol>
+                      <div style="border-radius: 0.25rem;" class="carousel-inner">
+                          <div class="carousel-item active">
+                              <img class="d-block w-100" style="height: 290px" src="{{ product.imageUrl }}" alt="First slide">
+                          </div>
+                      </div>
+                  </div>
+              </div>
+             <div class="olanaklar-kutu">
+                 <div class="olanaklar">
+                  <h4 class="pb-3">{{ product.title }}</h4>
+                  <ul>
+                      <li>
+                        <span> <strong>Price: </strong>{{ product.price }}.RS </span>
+                      </li>
+                      <li>
+                        <span ><strong>Price Range: </strong>{{ minimum }}.RS - {{ maximum }}.RS </span>
+                      </li>
+                      <li>
+                        <span ><strong>Average Price: </strong>{{ average }}.RS </span>
+                      </li>
+                      <li>
+                        <span ><strong>Site: </strong> <button class="btn btn-sm  btn-dark" disabled>{{product.site}}</button> </span>
+                      </li>
+                      
+                      <li>
+                        <span ><strong>Close Matches: </strong> <button class="btn btn-sm  btn-info" disabled>{{ closeMatches }}</button> </span>
+                      </li>
+                      <hr>
+                      <div class="row">
+                        
+                          <div class="col">
+                              <a href="{% url 'addToWishList' product.pk %}" class="btn btn-success">Add</a>
+                            
+                              <a href="{{ product.productUrl }}" class="btn btn-warning">Visit Site</a>
+                          </div>
+                        
+                          
+                      </div>
+                  </ul>
+              </div>
+              <!-- 
+                 <div class="olanaklar margin-top--22">
+                     <h4 class="pb-3">Hakkında</h4>
+                     <p>Fethiye'nin turkuaz ve dingin sularında muhteşem bir hafta gerçekleştirebilirsiniz. Kiralık yat ile bu doğal güzelliklere yakından şahitlik edebilirsiniz. 5 kabinli kiralık yelkenlimiz ile sizi Fethiye ve Göcek'in muhteşem koylarında keyifli bir seyahate çıkartıyoruz.</p>
+                 </div>
+                -->
+             </div>
+         </div>
+         <div class="col-md-8">
+             <div class="card">
+                 <button class="btn btn-lg btn-primary btn-block" disabled>Close Matches</button>
+                <table class="table">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>Title</th>
+                            <th>Price</th>
+                            <th>Site</th>
+                            <th>Add Wishlist</th>
+                            <th>Add<th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for product in products %}
+                        <tr>
+                            <td>{{ product.title }}</td>
+                            <td>{{ product.price }}</td>
+                            <td>{{ product.site }}</td>
+                            <td><a href="{{ product.productUrl }}">Visit Site</a></td>
+                            <td>
+                            <a href="{% url 'addToWishList' product.pk %}" class="btn btn-success">Add</a>
+                            </td>
+                        </tr>  
+                        {% endfor %}     
+                    </tbody>
+                </table>
+             </div>
+            
+         </div>
+     </div>
+   </div>
+</section>
+{% endblock content %}

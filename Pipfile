@@ -16,6 +16,10 @@ psycopg2 = "*"
 django-widget-tweaks = "*"
 channels = "*"
 celery = "*"
+redis = "==3.5.3"
+django-notifications-hq = "*"
+django-celery-beat = "*"
+eventlet = "*"
 
 [requires]
 python_version = "3.7"

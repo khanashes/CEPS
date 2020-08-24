@@ -6,17 +6,32 @@
     <div class="form-row align-items-center">
       <div class="col-auto">
         <label class="col-sm-2 col-form-label col-form-label-sm"  for="inlineFormInput">Min</label>
-        <input type="number" class="form-control form-control-sm" name="Min" id="inlineFormInput" value="0">
+        <input type="number" class="form-control form-control-sm" name="Min" id="inlineFormInput"
+        {% if minimum %}
+         value={{ minimum }}
+         {% else %}
+         value = "0"
+         {% endif %}
+        >
       </div>
       <div class="col-auto">
         <label class="col-sm-2 col-form-label col-form-label-sm"  for="inlineFormInput">Max</label>
-        <input type="number" class="form-control form-control-sm" name="Max" id="inlineFormInput" value="0">
+        <input type="number" class="form-control form-control-sm" name="Max" id="inlineFormInput"
+         {% if maximum %}
+         value={{ maximum }}
+         {% else %}
+         value = "0"
+         {% endif %}
+         >
       </div>
       <div class="col-auto">
         <button type="submit" class="btn btn-primary mb-2">Filter</button>
       </div>
-    </div>
+      </div>
   </form>
+  <hr>
+      <h6>Search Result Of:</h6> <span class="badge badge-dark">{{ query }}</span>
+    
 <hr>
 <div class="row" style="margin-top: 3rem;">
 {% include 'scraper/productList.html' %}

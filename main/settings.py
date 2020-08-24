@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 
 import os
 from celery.schedules import crontab
+from django.contrib.admin.sites import AdminSite
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -43,6 +44,7 @@ INSTALLED_APPS = [
     'scraper.apps.ScraperConfig',
     'notifications',
     'notify.apps.NotifyConfig',
+    'django_celery_beat',
 ]
 
 MIDDLEWARE = [
@@ -137,9 +139,12 @@ CELERY_BROKER_URL = 'redis://localhost:6379'
 CELERY_BEAT_SCHEDULE = {
     'scrape_data_schedule': { 
          'task': 'scraper.tasks.scrape_data', 
-         'schedule': 120,
+         'schedule': 300,
          'args': ('We don’t need any',),
         },          
 }
 
 FORKED_BY_MULTIPROCESSING=1
+CELERY_TASK_ALWAYS_EAGER  = True
+AdminSite.site_header = "CEPS Admin Panel"
+AdminSite.site_title = "CEPS"

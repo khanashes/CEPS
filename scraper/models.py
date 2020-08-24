@@ -9,7 +9,7 @@ class Product(models.Model):
     site = models.CharField(max_length=400)
     date = models.DateTimeField(auto_now_add=True)
     class Meta:
-        ordering = ('-title',)
+        ordering = ('-price',)
     def __str__(self):
         return self.title
 

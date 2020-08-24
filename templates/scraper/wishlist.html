@@ -6,7 +6,6 @@
             <th>Title</th>
             <th>Price</th>
             <th>Date</th>
-            <th>View Product</th>
             <th>Visit Site<th>
         </tr>
     </thead>
@@ -16,9 +15,8 @@
             <td>{{ product.product.title }}</td>
             <td>{{ product.product.price }}</td>
             <td>{{ product.added_date }}</td>
-            <td><a href="#">View Product</a></td>
             <td><a href="{{ product.product.productUrl }}">Visit Site</a></td>
-            <td> <a href="#" class="btn btn-warning btn-sm btn-block">Delete</a></td>
+            <td><a href="{% url 'deleteWishlist' product.id %}" class="btn btn-warning btn-sm btn-block">Delete</a></td>
         </tr>  
         {% endfor %}     
     </tbody>
